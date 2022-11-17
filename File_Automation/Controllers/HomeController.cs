@@ -119,12 +119,12 @@ namespace File_Automation.Controllers
                 }
                 streamwriter.Close();
             }
-            catch(Exception ex)
+            catch
             {
-                //TempData["alertMessage"] = "Please Provide the details Correctly";
-                //return RedirectToAction("UploadIssue");
-                string message = ex.Message;
-                Console.WriteLine(message);
+                TempData["alertMessage"] = "Please Provide the details Correctly";
+                return RedirectToAction("UploadIssue");
+                //string message = ex.Message;
+                //Console.WriteLine(message);
             }
 
             _db.Uploads.Add(model);
@@ -298,12 +298,12 @@ namespace File_Automation.Controllers
                 }
                 streamwriter.Close();
             }
-            catch(Exception ex)
+            catch
             {
-                //TempData["alertMessage"] = "Please Provide the details Correctly";
-                //return RedirectToAction("UploadIssue");
-                string message = ex.Message;
-                Console.WriteLine(message);
+                TempData["alertMessage"] = "Please Provide the details Correctly";
+                return RedirectToAction("UploadIssue");
+                //string message = ex.Message;
+                //Console.WriteLine(message);
             }
             _db.Copies.Add(model);
             _db.SaveChanges();

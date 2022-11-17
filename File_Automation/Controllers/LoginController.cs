@@ -59,8 +59,8 @@ namespace File_Automation.Controllers
             {
                 con.Open();
                 com.Connection = con;
-                //string querry = "SELECT * FROM [FileAutomation].[dbo].[Logins] where Username='" + username + "' AND password= '" + password + "'";
-                string querry = "SELECT * FROM [dbo].[Logins] where Username='" + username + "' AND password= '" + password + "'";
+                string querry = "SELECT * FROM [FileAutomation].[dbo].[Logins] where Username='" + username + "' AND password= '" + password + "'";
+                //string querry = "SELECT * FROM [dbo].[Logins] where Username='" + username + "' AND password= '" + password + "'";
                 //     SqlDataAdapter---Represents a set of data commands and a database connection that are used to
                 //     fill the System.Data.DataSet and update a SQL Server database. This class cannot
                 //     be inherited.
