@@ -1,0 +1,40 @@
+﻿@model Login
+
+@{
+    //Layout = "C:\\Users\\soupatil\\source\\repos\\File_Automation\\File_Automation\\Views\\Shared\\_LayoutLogin.cshtml";
+    Layout = "_LayoutLogin";
+}
+
+<div class="container border" style="padding:20px">
+    <form asp-action="login">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="@Model.UserName"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="@Model.UserName" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="@Model.UserName"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="@Model.Password"></label>
+            </div>
+            <div class="col-5">
+                <input type="password" asp-for="@Model.Password" class="form-control" />
+            </div>
+            <span class="text-danger" asp-validation-for="@Model.Password"></span>
+        </div>
+
+        <div class="form-group row">
+            
+            <div class="col-3">
+                <input type="submit" value="Submit">
+            </div>
+        </div>
+
+    </form>
+
+</div>

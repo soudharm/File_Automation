@@ -1,0 +1,94 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    //Get object from session
+    var UserName = HttpContextAccessor.HttpContext.Session.GetString("user");
+}
+<div class="card container">
+    <div class="card-header bg-warning bg-opacity-75 text-light ml-0  row ">
+        <div class="col-12 col-md-6">
+            <h3 class="text-black-50">Copy between azure storage</h3>
+        </div>
+    </div>
+</div>
+<br />
+
+<form asp-action="Move">
+
+    <input type="hidden" id="UserName" name="UserName" value="@UserName">
+
+    <input type="hidden" id="Operation" name="Operation" value="Copy">
+
+    <label for="environment" class="required">Source environment:</label>
+    <select name="SourceEnvironment" id="SourceEnvironment">
+        <option value="Test">Test</option>
+        <option value="Dev">Dev</option>
+        <option value="Prod">Prod</option>
+    </select>
+    <br>
+    <br />
+
+    <label for="environment" class="required">Target Environment:</label>
+
+    <select name="TargetEnvironment" id="TargetEnvironment">
+        <option value="Test">Test</option>
+        <option value="Dev">Dev</option>
+    </select>
+    <br>
+    <br />
+
+    <label for="SourceStorage" class="required">Source Storage Account:</label>
+    <input type="text" id="SourceStorage" name="SourceStorage">
+    <br><br>
+
+    <label for="DestinationStorage" class="required">Target Storage Account:</label>
+    <input type="text" id="DestinationStorage" name="DestinationStorage">
+    <br><br>
+
+    <label for="SourceContainer" class="required">Source Container:</label>
+    <input type="text" id="SourceContainer" name="SourceContainer">
+    <br><br>
+
+    <label for="DestinationContainer" class="required">Target Container:</label>
+    <input type="text" id="DestinationContainer" name="DestinationContainer">
+    <br><br>
+
+    <label for="SourceAzFolderName" class="required">Source Azure Folder:</label>
+    <input type="text" id="SourceAzFolderName" name="SourceAzFolderName">
+    <p style="color:red;">(Dont use / at the end)</p>
+    
+
+    <label for="DestAzFolderName">Target Azure Folder:</label>
+    <input type="text" id="DestAzFolderName" name="DestAzFolderName">
+    <p style="color:red;">(Mention Target Folder, If you want it to be created other than Source.)</p>
+
+    <label for="File">Source File Name:</label>
+    <input type="text" id="File" name="File">
+    <p style="color:red;">(Dont use * after prefix to select the files.)</p>
+
+    <input type="submit" value="Submit">
+
+</form>
+
+
+<style>
+    label {
+        display: inline-block;
+        float: left;
+        clear: left;
+        width: 200px;
+        text-align: left;
+    }
+
+    input {
+        display: inline-block;
+        float: left;
+    }
+
+    .required::after {
+        content: "*";
+        color: red;
+        margin-left: 3px
+    }
+
+</style>

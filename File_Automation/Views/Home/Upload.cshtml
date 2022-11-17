@@ -1,0 +1,87 @@
+﻿@model Upload
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    //Get object from session
+    var UserName = HttpContextAccessor.HttpContext.Session.GetString("user");
+}
+
+<div class="card container">
+    <div class="card-header bg-warning bg-opacity-75 text-light ml-0  row ">
+        <div class="col-12 col-md-6">
+            <h3 class="text-black-50">Upload to Azure Storage</h3>
+        </div>
+    </div>
+</div>
+<br />
+<form asp-action="Upload">
+    
+    <input type="hidden" id="UserName" name="UserName" value="@UserName">
+
+    <input type="hidden" id="Operation" name="Operation" value="Upload">
+
+    <label for="environment"class="required">Target Environment:</label>
+    <select name="environment" id="environment">
+        <option value="Test">Test</option>
+        <option value="Dev">Dev</option>
+    </select>
+    <br>
+    <br />
+
+    <label for="storage" class="required">Target Storage Account:</label>
+    <input type="text" id="storage" name="storage">
+    <br>
+    <br />
+
+    <label for="LocalPath" class="required">Local Path:</label>
+    <input type="text" id="LocalPath" name="LocalPath" size="75">
+    <br><br>
+
+    <label for="FileName" class="required">File Name:</label>
+    <input type="text" id="FileName" name="FileName" required>
+    <p style="color:red;">Use * after prefix to select the files.</p>
+
+    <label for="DestContainer" class="required"> Target Container:</label>
+    <select name="DestContainer" id="DestContainer">
+        <option value="staging">staging</option>
+    </select>
+    <br>
+    <br />
+
+    <label for="AzFolderName" class="required">Azure Folder Name:</label>
+    <input type="text" id="AzFolderName" name="AzFolderName">
+    <br><br>
+
+    <input type="submit" value="Submit">
+
+</form>
+
+
+<style>
+    label {
+        display: inline-block;
+        float: left;
+        clear: left;
+        width: 180px;
+        text-align: left;
+    }
+
+    input {
+        display: inline-block;
+        float: left;
+    }
+
+    .required::after {
+        content: "*";
+        color: red;
+        margin-left: 3px
+    }
+
+    .zoom {
+        zoom: 120%;
+    }
+
+    
+</style>
+

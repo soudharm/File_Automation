@@ -1,0 +1,43 @@
+﻿@model IEnumerable<File_Automation.Models.Upload>;
+
+<div class="container p-4 border">
+    <div class="row pb-2">
+        <div class="col">
+            <h1 class="text-primary">Request List</h1>
+        </div>
+    </div>
+
+    <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Operation</th>
+                    <th>environment</th>
+                    <th>storage</th>
+                    <th>LocalPath</th>
+                    <th>DestContainer</th>
+                    <th>AzFolderName</th>
+                    
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var data in Model)
+                {
+                    <tr>
+                        <td>@data.Id</td>
+                        <td>@data.Operation</td>
+                        <td>@data.environment</td>
+                        <td>@data.storage</td>
+                        <td>@data.LocalPath</td>
+                        <td>@data.DestContainer</td>
+                        <td>@data.AzFolderName</td>
+                        
+                    </tr>
+                }
+            </tbody>
+     </table>
+    
+</div>
+
