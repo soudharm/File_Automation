@@ -179,7 +179,7 @@ namespace File_Automation.Controllers
 
                                 bool isBlobCopiedSuccessfully = false;
                                 var targetBlobProperties = await targetContainerClient.GetBlobClient(model.DestAzFolderName + "/" + createfile).GetPropertiesAsync();
-                                Console.WriteLine($"Current copy status = {targetBlobProperties.Value.CopyStatus}");
+                                //Console.WriteLine($"Current copy status = {targetBlobProperties.Value.CopyStatus}");
                                 if (targetBlobProperties.Value.CopyStatus == CopyStatus.Pending)
                                 {
                                     System.Threading.Thread.Sleep(1000);
@@ -210,7 +210,7 @@ namespace File_Automation.Controllers
                                 bool isBlobCopiedSuccessfully = false;
                                 //Console.WriteLine("Checking copy status....");
                                 var targetBlobProperties = await targetContainerClient.GetBlobClient(blobItem.Name).GetPropertiesAsync();
-                                Console.WriteLine($"Current copy status = {targetBlobProperties.Value.CopyStatus}");
+                                //Console.WriteLine($"Current copy status = {targetBlobProperties.Value.CopyStatus}");
                                 if (targetBlobProperties.Value.CopyStatus == CopyStatus.Pending)
                                 {
                                     System.Threading.Thread.Sleep(1000);
@@ -244,7 +244,7 @@ namespace File_Automation.Controllers
                                 bool isBlobCopiedSuccessfully = false;
                                 //Console.WriteLine("Checking copy status....");
                                 var targetBlobProperties = await targetContainerClient.GetBlobClient(model.DestAzFolderName + "/" + createfile).GetPropertiesAsync();
-                                Console.WriteLine($"Current copy status = {targetBlobProperties.Value.CopyStatus}");
+                                //Console.WriteLine($"Current copy status = {targetBlobProperties.Value.CopyStatus}");
                                 if (targetBlobProperties.Value.CopyStatus == CopyStatus.Pending)
                                 {
                                     System.Threading.Thread.Sleep(1000);
@@ -276,7 +276,7 @@ namespace File_Automation.Controllers
                                 bool isBlobCopiedSuccessfully = false;
                                 //Console.WriteLine("Checking copy status....");
                                 var targetBlobProperties = await targetContainerClient.GetBlobClient(blobItem.Name).GetPropertiesAsync();
-                                Console.WriteLine($"Current copy status = {targetBlobProperties.Value.CopyStatus}");
+                                //Console.WriteLine($"Current copy status = {targetBlobProperties.Value.CopyStatus}");
                                 if (targetBlobProperties.Value.CopyStatus == CopyStatus.Pending)
                                 {
                                     System.Threading.Thread.Sleep(1000);
