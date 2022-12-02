@@ -121,8 +121,8 @@ namespace File_Automation.Controllers
             }
             catch
             {
-                //TempData["alertMessage"] = "Please Provide the details Correctly";
-                //return RedirectToAction("UploadIssue");
+                TempData["alertMessage"] = "Please Provide the details Correctly";
+                return RedirectToAction("UploadIssue");
                 //string message = ex.Message;
                 //Console.WriteLine(message);
             }
