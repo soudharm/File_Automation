@@ -94,10 +94,10 @@ namespace File_Automation.Controllers
                 BlobServiceClient blobServiceClient = new BlobServiceClient(connection(model.environment, model.storage));
                 BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
                 FileStream filestream = new FileStream(logpath, FileMode.Create);
-                StreamWriter streamwriter = new StreamWriter(filestream);
-                streamwriter.AutoFlush = true;
-                Console.SetOut(streamwriter);
-                Console.SetError(streamwriter);
+                //StreamWriter streamwriter = new StreamWriter(filestream);
+                //streamwriter.AutoFlush = true;
+                //Console.SetOut(streamwriter);
+                //Console.SetError(streamwriter);
 
 
                 foreach (var file in files)
@@ -116,18 +116,14 @@ namespace File_Automation.Controllers
                     }
 
                 }
-                
-            
-                //TempData["alertMessage"] = "Please Provide the details Correctly";
-                //return RedirectToAction("UploadIssue");
-                string message = ex.Message;
-                Console.WriteLine(message);
-                streamwriter.Close();
+                //streamwriter.Close();
+           
+
                 _db.Uploads.Add(model);
                 _db.SaveChanges();
 
-            return RedirectToAction("Logs");
-            }
+                return RedirectToAction("Logs");
+        }
 
         public IActionResult UploadIssue()
         {
