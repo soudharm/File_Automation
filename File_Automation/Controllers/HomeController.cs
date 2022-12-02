@@ -84,8 +84,7 @@ namespace File_Automation.Controllers
         public IActionResult Upload(Upload model)
         {
             
-            try
-            {
+            
                 string containerName = model.DestContainer;
                 string folderpath = model.LocalPath;
 
@@ -117,21 +116,18 @@ namespace File_Automation.Controllers
                     }
 
                 }
+                
+            
+                //TempData["alertMessage"] = "Please Provide the details Correctly";
+                //return RedirectToAction("UploadIssue");
+                string message = ex.Message;
+                Console.WriteLine(message);
                 streamwriter.Close();
-            }
-            catch
-            {
-                TempData["alertMessage"] = "Please Provide the details Correctly";
-                return RedirectToAction("UploadIssue");
-                //string message = ex.Message;
-                //Console.WriteLine(message);
-            }
-
-            _db.Uploads.Add(model);
-            _db.SaveChanges();
+                _db.Uploads.Add(model);
+                _db.SaveChanges();
 
             return RedirectToAction("Logs");
-        }
+            }
 
         public IActionResult UploadIssue()
         {
