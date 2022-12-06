@@ -15,13 +15,13 @@
     </div>
 </div>
 <br />
-<form asp-action="Upload">
-    
+<form asp-action="Upload" method="post" enctype="multipart/form-data">
+
     <input type="hidden" id="UserName" name="UserName" value="@UserName">
 
     <input type="hidden" id="Operation" name="Operation" value="Upload">
 
-    <label for="environment"class="required">Target Environment:</label>
+    <label for="environment" class="required">Target Environment:</label>
     <select name="environment" id="environment">
         <option value="Test">Test</option>
         <option value="Dev">Dev</option>
@@ -42,13 +42,11 @@
     <input type="text" id="AzFolderName" name="AzFolderName">
     <br><br>
 
-    <label for="LocalPath" class="required">Local Path:</label>
-    <input type="text" id="LocalPath" name="LocalPath" size="75" required>
+    <label for="LocalPath" class="required">Select Files:</label>
+    <input type="file" id="LocalPath" name="LocalPath" multiple>
     <br><br>
 
-    <label for="FileName" class="required">File Name:</label>
-    <input type="text" id="FileName" name="FileName" required>
-    <p style="color:red;">Use * after prefix to select the files.</p>
+
 
     <input type="submit" value="Submit">
 
