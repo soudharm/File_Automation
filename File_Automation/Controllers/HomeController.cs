@@ -121,16 +121,18 @@ namespace File_Automation.Controllers
 
                 
             }
-            catch(Exception ex)
+            catch
             {
-                //TempData["alertMessage"] = "Please Provide the details Correctly";
-                //return RedirectToAction("UploadIssue");
-                string message = ex.Message;
-                Console.WriteLine(message);
+                TempData["alertMessage"] = "Please Provide the details Correctly";
+                return RedirectToAction("UploadIssue");
+                //string message = ex.Message;
+                //Console.WriteLine(message);
             }
             streamwriter.Close();
             _db.Uploads.Add(model);
             _db.SaveChanges();
+
+            System.Threading.Thread.Sleep(1000);
 
             return RedirectToAction("Logs");        
 
@@ -150,17 +152,18 @@ namespace File_Automation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Move(Move model)
         {
+            FileStream filestream = new FileStream(logpath, FileMode.Create);
+            StreamWriter streamwriter = new StreamWriter(filestream);
+            streamwriter.AutoFlush = true;
+            Console.SetOut(streamwriter);
+            Console.SetError(streamwriter);
             try
             {
                 BlobContainerClient sourceContainerClient = new BlobContainerClient(connection(model.SourceEnvironment, model.SourceStorage), model.SourceContainer);
                 BlobContainerClient targetContainerClient = new BlobContainerClient(connection(model.TargetEnvironment, model.DestinationStorage), model.DestinationContainer);
 
-                FileStream filestream = new FileStream(logpath, FileMode.Create);
-                StreamWriter streamwriter = new StreamWriter(filestream);
-                streamwriter.AutoFlush = true;
-                Console.SetOut(streamwriter);
-                Console.SetError(streamwriter);
-                Console.WriteLine("Sending copy blob request....");
+                
+                //Console.WriteLine("Sending copy blob request....");
 
                 var blobs = sourceContainerClient.GetBlobs(prefix: model.SourceAzFolderName + "//");
 
@@ -176,28 +179,11 @@ namespace File_Automation.Controllers
                         {
                             if (blobItem.Name.Contains(model.File) && blobItem.Name.Contains("."))
                             {
-                                Console.WriteLine(blobItem.Name);
+       
                                 string createfile = Getfilename(blobItem.Name);
                                 var result = await targetContainerClient.GetBlobClient(model.DestAzFolderName + "/" + createfile).StartCopyFromUriAsync(GetSharedAccessUri(blobItem.Name, sourceContainerClient));
 
-                                bool isBlobCopiedSuccessfully = false;
-                                var targetBlobProperties = await targetContainerClient.GetBlobClient(model.DestAzFolderName + "/" + createfile).GetPropertiesAsync();
-                                //Console.WriteLine($"Current copy status = {targetBlobProperties.Value.CopyStatus}");
-                                if (targetBlobProperties.Value.CopyStatus == CopyStatus.Pending)
-                                {
-                                    System.Threading.Thread.Sleep(1000);
-                                }
-                                else
-                                {
-                                    isBlobCopiedSuccessfully = targetBlobProperties.Value.CopyStatus == CopyStatus.Success;
-
-                                }
-
-
-                                if (isBlobCopiedSuccessfully)
-                                {
-                                    Console.WriteLine("Blob copied successfully");
-                                }
+                                Console.WriteLine(model.DestAzFolderName + "/" + createfile+" copied.");
                             }
                         }
                         else if (model.DestAzFolderName == null)
@@ -205,30 +191,7 @@ namespace File_Automation.Controllers
                             if (blobItem.Name.Contains(model.File) && blobItem.Name.Contains("."))
                             {
                                 var result = await targetContainerClient.GetBlobClient(blobItem.Name).StartCopyFromUriAsync(GetSharedAccessUri(blobItem.Name, sourceContainerClient));
-                                Console.WriteLine(blobItem.Name);
-
-
-                                //Console.WriteLine("Copy blob request sent....");
-                                //Console.WriteLine("============");
-                                bool isBlobCopiedSuccessfully = false;
-                                //Console.WriteLine("Checking copy status....");
-                                var targetBlobProperties = await targetContainerClient.GetBlobClient(blobItem.Name).GetPropertiesAsync();
-                                //Console.WriteLine($"Current copy status = {targetBlobProperties.Value.CopyStatus}");
-                                if (targetBlobProperties.Value.CopyStatus == CopyStatus.Pending)
-                                {
-                                    System.Threading.Thread.Sleep(1000);
-                                }
-                                else
-                                {
-                                    isBlobCopiedSuccessfully = targetBlobProperties.Value.CopyStatus == CopyStatus.Success;
-
-                                }
-                                //Console.WriteLine(targetBlobProperties.Value.CopyStatusDescription);
-
-                                if (isBlobCopiedSuccessfully)
-                                {
-                                    Console.WriteLine("Blob copied successfully");
-                                }
+                                Console.WriteLine(blobItem.Name + " copied.");
                             }
                         }
 
@@ -239,31 +202,12 @@ namespace File_Automation.Controllers
                         {
                             if (blobItem.Name.Contains("."))
                             {
-                                Console.WriteLine(blobItem.Name);
+                                
                                 string createfile = Getfilename(blobItem.Name);
                                 //Console.WriteLine("after" + "//" + createfile);
                                 var result = await targetContainerClient.GetBlobClient(model.DestAzFolderName + "/" + createfile).StartCopyFromUriAsync(GetSharedAccessUri(blobItem.Name, sourceContainerClient));
 
-                                bool isBlobCopiedSuccessfully = false;
-                                //Console.WriteLine("Checking copy status....");
-                                var targetBlobProperties = await targetContainerClient.GetBlobClient(model.DestAzFolderName + "/" + createfile).GetPropertiesAsync();
-                                //Console.WriteLine($"Current copy status = {targetBlobProperties.Value.CopyStatus}");
-                                if (targetBlobProperties.Value.CopyStatus == CopyStatus.Pending)
-                                {
-                                    System.Threading.Thread.Sleep(1000);
-                                }
-                                else
-                                {
-                                    isBlobCopiedSuccessfully = targetBlobProperties.Value.CopyStatus == CopyStatus.Success;
-
-                                }
-                                //Console.WriteLine(targetBlobProperties.Value.CopyStatusDescription);
-
-
-                                if (isBlobCopiedSuccessfully)
-                                {
-                                    Console.WriteLine("Blob copied successfully");
-                                }
+                                Console.WriteLine(model.DestAzFolderName + "/" + createfile + " copied.");
                             }
                         }
                         else if (model.DestAzFolderName == null)
@@ -271,46 +215,25 @@ namespace File_Automation.Controllers
                             if (blobItem.Name.Contains("."))
                             {
                                 var result = await targetContainerClient.GetBlobClient(blobItem.Name).StartCopyFromUriAsync(GetSharedAccessUri(blobItem.Name, sourceContainerClient));
-                                Console.WriteLine(blobItem.Name);
-
-
-                                //Console.WriteLine("Copy blob request sent....");
-                                //Console.WriteLine("============");
-                                bool isBlobCopiedSuccessfully = false;
-                                //Console.WriteLine("Checking copy status....");
-                                var targetBlobProperties = await targetContainerClient.GetBlobClient(blobItem.Name).GetPropertiesAsync();
-                                //Console.WriteLine($"Current copy status = {targetBlobProperties.Value.CopyStatus}");
-                                if (targetBlobProperties.Value.CopyStatus == CopyStatus.Pending)
-                                {
-                                    System.Threading.Thread.Sleep(1000);
-                                }
-                                else
-                                {
-                                    isBlobCopiedSuccessfully = targetBlobProperties.Value.CopyStatus == CopyStatus.Success;
-
-                                }
-                                //Console.WriteLine(targetBlobProperties.Value.CopyStatusDescription);
-
-                                if (isBlobCopiedSuccessfully)
-                                {
-                                    Console.WriteLine("Blob copied successfully");
-                                }
+                                Console.WriteLine(blobItem.Name + " copied.");
                             }
                         }
                     }
                 }
-                streamwriter.Close();
+                
             }
-            catch
+            catch//(Exception ex)
             {
                 TempData["alertMessage"] = "Please Provide the details Correctly";
                 return RedirectToAction("UploadIssue");
                 //string message = ex.Message;
                 //Console.WriteLine(message);
             }
+            streamwriter.Close();
             _db.Copies.Add(model);
             _db.SaveChanges();
 
+            System.Threading.Thread.Sleep(1000);
             return RedirectToAction("Logs");
         }
 
@@ -391,6 +314,7 @@ namespace File_Automation.Controllers
             _db.Deletes.Add(model);
             _db.SaveChanges();
 
+            System.Threading.Thread.Sleep(1000);
             return RedirectToAction("Logs");
         }
 
