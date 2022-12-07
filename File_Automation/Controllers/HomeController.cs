@@ -129,7 +129,7 @@ namespace File_Automation.Controllers
                 //string message = ex.Message;
                 //Console.WriteLine(message);
             }
-            
+            streamwriter.Close();
             _db.Uploads.Add(model);
             _db.SaveChanges();
 
