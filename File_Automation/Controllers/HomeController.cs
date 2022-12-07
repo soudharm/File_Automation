@@ -83,7 +83,11 @@ namespace File_Automation.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upload(Upload model)
         {
-            
+            FileStream filestream = new FileStream(logpath, FileMode.Create);
+            StreamWriter streamwriter = new StreamWriter(filestream);
+            streamwriter.AutoFlush = true;
+            Console.SetOut(streamwriter);
+            Console.SetError(streamwriter);
             try
             {
                 string containerName = model.DestContainer;
@@ -98,11 +102,7 @@ namespace File_Automation.Controllers
                 //BlobContainerClient containerClient = new BlobContainerClient(connection(model.environment, model.storage), containerName);
                 BlobServiceClient blobServiceClient = new BlobServiceClient(connection(model.environment, model.storage));
                 BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
-                FileStream filestream = new FileStream(logpath, FileMode.Create);
-                StreamWriter streamwriter = new StreamWriter(filestream);
-                streamwriter.AutoFlush = true;
-                Console.SetOut(streamwriter);
-                Console.SetError(streamwriter);
+                
 
                 //BlobClient blob=containerClient.GetBlobClient(folderpath);
                 foreach (IFormFile path in model.LocalPath)
@@ -123,6 +123,7 @@ namespace File_Automation.Controllers
             }
             catch
             {
+                streamwriter.Close();
                 TempData["alertMessage"] = "Please Provide the details Correctly";
                 return RedirectToAction("UploadIssue");
                 //string message = ex.Message;
@@ -152,16 +153,16 @@ namespace File_Automation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Move(Move model)
         {
-            
+            FileStream filestream = new FileStream(logpath, FileMode.Create);
+            StreamWriter streamwriter = new StreamWriter(filestream);
+            streamwriter.AutoFlush = true;
+            Console.SetOut(streamwriter);
+            Console.SetError(streamwriter);
             try
             {
                 BlobContainerClient sourceContainerClient = new BlobContainerClient(connection(model.SourceEnvironment, model.SourceStorage), model.SourceContainer);
                 BlobContainerClient targetContainerClient = new BlobContainerClient(connection(model.TargetEnvironment, model.DestinationStorage), model.DestinationContainer);
-                FileStream filestream = new FileStream(logpath, FileMode.Create);
-                StreamWriter streamwriter = new StreamWriter(filestream);
-                streamwriter.AutoFlush = true;
-                Console.SetOut(streamwriter);
-                Console.SetError(streamwriter);
+                
 
                 //Console.WriteLine("Sending copy blob request....");
 
@@ -224,6 +225,7 @@ namespace File_Automation.Controllers
             }
             catch//(Exception ex)
             {
+                streamwriter.Close();
                 TempData["alertMessage"] = "Please Provide the details Correctly";
                 return RedirectToAction("UploadIssue");
                 //string message = ex.Message;
@@ -246,6 +248,11 @@ namespace File_Automation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Delete model)
         {
+            FileStream filestream = new FileStream(logpath, FileMode.Create);
+            StreamWriter streamwriter = new StreamWriter(filestream);
+            streamwriter.AutoFlush = true;
+            Console.SetOut(streamwriter);
+            Console.SetError(streamwriter);
             try
             {
                 BlobContainerClient containerClient = new BlobContainerClient(connection(model.environment, model.storage), model.Container);
@@ -253,11 +260,7 @@ namespace File_Automation.Controllers
                 //ArrayList list = new ArrayList();
                 //List<BlobItem> blobItems = new List<BlobItem>();
                 BlobClient sourceBlob = containerClient.GetBlobClient(model.AzFolderName);
-                FileStream filestream = new FileStream(logpath, FileMode.Create);
-                StreamWriter streamwriter = new StreamWriter(filestream);
-                streamwriter.AutoFlush = true;
-                Console.SetOut(streamwriter);
-                Console.SetError(streamwriter);
+                
 
                 var blobs = containerClient.GetBlobs(prefix: model.AzFolderName + "//");
 
@@ -297,6 +300,7 @@ namespace File_Automation.Controllers
             //}
             catch (Exception ex)
             {
+                streamwriter.Close();
                 if (ex.Message.Contains("DirectoryIsNotEmpty"))
                 {
                     Console.WriteLine("");
