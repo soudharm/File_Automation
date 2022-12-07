@@ -300,7 +300,7 @@ namespace File_Automation.Controllers
             //}
             catch (Exception ex)
             {
-                streamwriter.Close();
+                
                 if (ex.Message.Contains("DirectoryIsNotEmpty"))
                 {
                     Console.WriteLine("");
@@ -308,6 +308,7 @@ namespace File_Automation.Controllers
                 }
                 else
                 {
+                    streamwriter.Close();
                     //string message = ex.Message;
                     //Console.WriteLine(message);
                     TempData["alertMessage"] = "Please Provide the details Correctly";
