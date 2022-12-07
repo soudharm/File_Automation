@@ -83,11 +83,7 @@ namespace File_Automation.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upload(Upload model)
         {
-            FileStream filestream = new FileStream(logpath, FileMode.Create);
-            StreamWriter streamwriter = new StreamWriter(filestream);
-            streamwriter.AutoFlush = true;
-            Console.SetOut(streamwriter);
-            Console.SetError(streamwriter);
+            
             try
             {
                 string containerName = model.DestContainer;
@@ -102,7 +98,11 @@ namespace File_Automation.Controllers
                 //BlobContainerClient containerClient = new BlobContainerClient(connection(model.environment, model.storage), containerName);
                 BlobServiceClient blobServiceClient = new BlobServiceClient(connection(model.environment, model.storage));
                 BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
-                
+                FileStream filestream = new FileStream(logpath, FileMode.Create);
+                StreamWriter streamwriter = new StreamWriter(filestream);
+                streamwriter.AutoFlush = true;
+                Console.SetOut(streamwriter);
+                Console.SetError(streamwriter);
 
                 //BlobClient blob=containerClient.GetBlobClient(folderpath);
                 foreach (IFormFile path in model.LocalPath)
@@ -119,7 +119,7 @@ namespace File_Automation.Controllers
                     Console.WriteLine(model.AzFolderName + "/" + path.FileName + " Uploaded");
                 }
 
-                
+                streamwriter.Close();
             }
             catch
             {
@@ -128,11 +128,11 @@ namespace File_Automation.Controllers
                 //string message = ex.Message;
                 //Console.WriteLine(message);
             }
-            streamwriter.Close();
+            
             _db.Uploads.Add(model);
             _db.SaveChanges();
 
-            System.Threading.Thread.Sleep(1000);
+            //System.Threading.Thread.Sleep(1000);
 
             return RedirectToAction("Logs");        
 
@@ -152,17 +152,17 @@ namespace File_Automation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Move(Move model)
         {
-            FileStream filestream = new FileStream(logpath, FileMode.Create);
-            StreamWriter streamwriter = new StreamWriter(filestream);
-            streamwriter.AutoFlush = true;
-            Console.SetOut(streamwriter);
-            Console.SetError(streamwriter);
+            
             try
             {
                 BlobContainerClient sourceContainerClient = new BlobContainerClient(connection(model.SourceEnvironment, model.SourceStorage), model.SourceContainer);
                 BlobContainerClient targetContainerClient = new BlobContainerClient(connection(model.TargetEnvironment, model.DestinationStorage), model.DestinationContainer);
+                FileStream filestream = new FileStream(logpath, FileMode.Create);
+                StreamWriter streamwriter = new StreamWriter(filestream);
+                streamwriter.AutoFlush = true;
+                Console.SetOut(streamwriter);
+                Console.SetError(streamwriter);
 
-                
                 //Console.WriteLine("Sending copy blob request....");
 
                 var blobs = sourceContainerClient.GetBlobs(prefix: model.SourceAzFolderName + "//");
@@ -220,7 +220,7 @@ namespace File_Automation.Controllers
                         }
                     }
                 }
-                
+                streamwriter.Close();
             }
             catch//(Exception ex)
             {
@@ -229,11 +229,11 @@ namespace File_Automation.Controllers
                 //string message = ex.Message;
                 //Console.WriteLine(message);
             }
-            streamwriter.Close();
+            
             _db.Copies.Add(model);
             _db.SaveChanges();
 
-            System.Threading.Thread.Sleep(1000);
+            //System.Threading.Thread.Sleep(1000);
             return RedirectToAction("Logs");
         }
 

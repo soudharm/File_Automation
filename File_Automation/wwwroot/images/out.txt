@@ -1,4 +1,2 @@
-folder1234/20211027.txt copied.
-folder1234/20211028.txt copied.
-folder1234/20211029.txt copied.
-folder1234/doc1.txt copied.
+folder730/20211028.txt copied.
+folder730/20211029.txt copied.
