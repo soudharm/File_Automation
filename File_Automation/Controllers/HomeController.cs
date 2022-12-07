@@ -231,7 +231,7 @@ namespace File_Automation.Controllers
                 //string message = ex.Message;
                 //Console.WriteLine(message);
             }
-            
+            streamwriter.Close();
             _db.Copies.Add(model);
             _db.SaveChanges();
 
@@ -316,6 +316,7 @@ namespace File_Automation.Controllers
                 }
                 
             }
+            streamwriter.Close();
             _db.Deletes.Add(model);
             _db.SaveChanges();
 
