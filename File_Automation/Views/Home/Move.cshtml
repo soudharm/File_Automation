@@ -4,13 +4,13 @@
     //Get object from session
     var UserName = HttpContextAccessor.HttpContext.Session.GetString("user");
 }
-<div class="card container">
-    <div class="card-header bg-warning bg-opacity-75 text-light ml-0  row ">
-        <div class="col-12 col-md-6">
+@*<div class="card container">*@
+    <div class="card-header bg-warning bg-opacity-75 text-light ml-0  row " style=" width: 42rem;">
+        <div class="col-12 col-md-12">
             <h3 class="text-black-50">Copy between azure storage</h3>
         </div>
     </div>
-</div>
+@*</div>*@
 <br />
 
 <form asp-action="Move">
@@ -55,16 +55,16 @@
 
     <label for="SourceAzFolderName" class="required">Source Azure Folder:</label>
     <input type="text" id="SourceAzFolderName" name="SourceAzFolderName" required>
-    <p style="color:red;">(Dont use / at the end)</p>
+    <p style="color:blue;">(Dont use / at the end)</p>
     
 
     <label for="DestAzFolderName">Target Azure Folder:</label>
     <input type="text" id="DestAzFolderName" name="DestAzFolderName">
-    <p style="color:red;">(Mention Target Folder, If you want it to be created other than Source.)</p>
+    <p style="color:blue;">(Mention Target Folder, If you want it to be created other than Source.)</p>
 
     <label for="File">Source File Name:</label>
     <input type="text" id="File" name="File">
-    <p style="color:red;">(Dont use * after prefix to select the files.)</p>
+    <p style="color:blue;">(Dont use * after prefix to select the files.)</p>
 
     <input type="submit" value="Submit">
 
@@ -76,8 +76,9 @@
         display: inline-block;
         float: left;
         clear: left;
-        width: 200px;
+        width: 250px;
         text-align: left;
+        font-weight: 800;
     }
 
     input {
@@ -88,7 +89,7 @@
     .required::after {
         content: "*";
         color: red;
-        margin-left: 3px
+        margin-left: 3px;
     }
 
 </style>

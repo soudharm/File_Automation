@@ -4,13 +4,13 @@
     //Get object from session
     var UserName = HttpContextAccessor.HttpContext.Session.GetString("user");
 }
-<div class="card container">
-    <div class="card-header bg-warning bg-opacity-75 text-light ml-0  row ">
-        <div class="col-12 col-md-6">
+@*<div class="card container">*@
+    <div class="card-header bg-warning bg-opacity-75 text-light ml-0  row " style=" width: 42rem;">
+        <div class="col-12 col-md-12">
             <h3 class="text-black-50">Delete from Azure Storage</h3>
         </div>
     </div>
-</div>
+@*</div>*@
 <br />
 
 <form asp-action="Delete">
@@ -54,8 +54,9 @@
         display: inline-block;
         float: left;
         clear: left;
-        width: 180px;
+        width: 250px;
         text-align: left;
+        font-weight: 800;
     }
 
     input {

@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light @*bg-secondary bg-opacity-100*@ border-bottom box-shadow mb-3 " style=" background-color:darkcyan;height:5rem">
             <div class="container-fluid">
                 <a class="navbar-brand"><img width="35px" src="~/images/AA.png" />File Automation</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -55,7 +55,7 @@
     <br />
 
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <div class="container" style="color:black"> 
             &copy; 2022 - File Automation
         </div>
     </footer>
@@ -65,3 +65,15 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
+<style>
+    body {
+        background-image: url(https://img.freepik.com/premium-photo/businesswoman-hand-touch-folder-document-management-system-online-documentation-database-process-automation-efficiently-manage-files-work-knowledge-corporate-business-technology_162459-2197.jpg?w=1380);
+        background-repeat: no-repeat;
+        /*background-position: bottom;
+        background-position-x: 100%;*/
+        background-color: cornsilk;
+        background-size: 1600px 800px;
+    }
+</style>
