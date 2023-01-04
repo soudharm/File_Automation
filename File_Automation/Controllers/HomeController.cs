@@ -65,7 +65,9 @@ namespace File_Automation.Controllers
             Dev_aznestddaveadls1 = Configuration.GetValue<string>("StorageAccounts:Dev_aznestddaveadls1");
             Prod_aznestpdaveehstaging1 = Configuration.GetValue<string>("StorageAccounts:Prod_aznestpdaveehstaging1");
             Prod_aznestpdaveadls1 = Configuration.GetValue<string>("StorageAccounts:Prod_aznestpdaveadls1");
-            logpath= Configuration.GetValue<string>("LogFile:logpath");
+            Prod_diadifstorage002 = Configuration.GetValue<string>("StorageAccounts:Prod_diadifstorage002");
+            Test_diadifstorage001 = Configuration.GetValue<string>("StorageAccounts:Test_diadifstorage001");
+            logpath = Configuration.GetValue<string>("LogFile:logpath");
         }
 
         //--Get Index Action
