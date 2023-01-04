@@ -46,6 +46,8 @@ namespace File_Automation.Controllers
         static string Dev_aznestddaveadls1;
         static string Prod_aznestpdaveehstaging1;
         static string Prod_aznestpdaveadls1;
+        static string Prod_diadifstorage002;
+        static string Test_diadifstorage001;
         static string logpath; //= "C:\\Users\\soupatil\\source\\repos\\File_Automation\\File_Automation\\wwwroot\\images\\out.txt";
         //static string logpath = "~/images/out.txt";
         
@@ -363,6 +365,14 @@ namespace File_Automation.Controllers
             else if (env == "Prod" && src == "aznestpdaveadls1")
             {
                 return Prod_aznestpdaveadls1;
+            }
+            else if (env == "Prod" && src == "diadifstorage002")
+            {
+                return Prod_diadifstorage002;
+            }
+            else if (env == "Test" && src == "diadifstorage001")
+            {
+                return Test_diadifstorage001;
             }
             return null;
         }
